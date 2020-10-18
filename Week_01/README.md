@@ -48,11 +48,11 @@ public class MyClassLoad extends ClassLoader {
 ```
 <a name="m9oGm"></a>
 ### 执行结果
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/261655/1602925597978-3afa9f8c-f749-4ff5-af8a-55e08856c72b.png#align=left&display=inline&height=821&margin=%5Bobject%20Object%5D&name=image.png&originHeight=821&originWidth=1258&size=1152002&status=done&style=none&width=1258)<br />
+![image.png](https://img2020.cnblogs.com/blog/1135109/202010/1135109-20201018210103219-621449306.png)<br />
 
 <a name="KkyyE"></a>
 # 2.第三题
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/261655/1602925638417-30638074-ed67-41f1-ba08-5ff0459ae6e1.png#align=left&display=inline&height=569&margin=%5Bobject%20Object%5D&name=image.png&originHeight=569&originWidth=992&size=266037&status=done&style=none&width=992)<br />
+![image.png](https://img2020.cnblogs.com/blog/1135109/202010/1135109-20201018210103219-621449306.png)<br />
 
 > 题目
 
