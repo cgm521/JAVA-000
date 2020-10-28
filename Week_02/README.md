@@ -24,6 +24,41 @@ Heap
  Metaspace       used 2712K, capacity 4486K, committed 4864K, reserved 1056768K
   class space    used 294K, capacity 386K, committed 512K, reserved 1048576K
 ```
+- 并行GC
+```java
+[/Users/caiguangming/my-work/my-dome] java -XX:+UseParallelGC -Xmx512m -Xms512m -XX:+PrintGCDetails GCLogAnalysis
+正在执行...
+[GC (Allocation Failure) [PSYoungGen: 131584K->21503K(153088K)] 131584K->47344K(502784K), 0.0328446 secs] [Times: user=0.03 sys=0.06, real=0.03 secs]
+[GC (Allocation Failure) [PSYoungGen: 153087K->21500K(153088K)] 178928K->93644K(502784K), 0.0453416 secs] [Times: user=0.04 sys=0.09, real=0.05 secs]
+[GC (Allocation Failure) [PSYoungGen: 153084K->21501K(153088K)] 225228K->136162K(502784K), 0.0378360 secs] [Times: user=0.03 sys=0.05, real=0.03 secs]
+[GC (Allocation Failure) [PSYoungGen: 153085K->21497K(153088K)] 267746K->174112K(502784K), 0.0313887 secs] [Times: user=0.04 sys=0.05, real=0.03 secs]
+[GC (Allocation Failure) [PSYoungGen: 153081K->21495K(153088K)] 305696K->219708K(502784K), 0.0385827 secs] [Times: user=0.04 sys=0.05, real=0.03 secs]
+[GC (Allocation Failure) [PSYoungGen: 153079K->21487K(80384K)] 351292K->260339K(430080K), 0.0323173 secs] [Times: user=0.04 sys=0.06, real=0.03 secs]
+[GC (Allocation Failure) [PSYoungGen: 80367K->34915K(116736K)] 319219K->279143K(466432K), 0.0157139 secs] [Times: user=0.03 sys=0.00, real=0.01 secs]
+[GC (Allocation Failure) [PSYoungGen: 93509K->45258K(116736K)] 337737K->295664K(466432K), 0.0207930 secs] [Times: user=0.03 sys=0.01, real=0.02 secs]
+[GC (Allocation Failure) [PSYoungGen: 103965K->55722K(116736K)] 354371K->315010K(466432K), 0.0192759 secs] [Times: user=0.03 sys=0.01, real=0.02 secs]
+[GC (Allocation Failure) [PSYoungGen: 114457K->38783K(116736K)] 373745K->330786K(466432K), 0.0321332 secs] [Times: user=0.04 sys=0.04, real=0.03 secs]
+[Full GC (Ergonomics) [PSYoungGen: 38783K->0K(116736K)] [ParOldGen: 292002K->237618K(349696K)] 330786K->237618K(466432K), [Metaspace: 2706K->2706K(1056768K)], 0.0587419 secs] [Times: user=0.12 sys=0.01, real=0.06 secs]
+[GC (Allocation Failure) [PSYoungGen: 58880K->21417K(116736K)] 296498K->259035K(466432K), 0.0050316 secs] [Times: user=0.02 sys=0.00, real=0.01 secs]
+[GC (Allocation Failure) [PSYoungGen: 80011K->20907K(116736K)] 317629K->278355K(466432K), 0.0092429 secs] [Times: user=0.02 sys=0.00, real=0.01 secs]
+[GC (Allocation Failure) [PSYoungGen: 79787K->20025K(116736K)] 337235K->297141K(466432K), 0.0089684 secs] [Times: user=0.02 sys=0.00, real=0.01 secs]
+[GC (Allocation Failure) [PSYoungGen: 78843K->21889K(116736K)] 355959K->318609K(466432K), 0.0156235 secs] [Times: user=0.02 sys=0.00, real=0.01 secs]
+[GC (Allocation Failure) [PSYoungGen: 80769K->23212K(116736K)] 377489K->341209K(466432K), 0.0257085 secs] [Times: user=0.03 sys=0.03, real=0.02 secs]
+[Full GC (Ergonomics) [PSYoungGen: 23212K->0K(116736K)] [ParOldGen: 317997K->278376K(349696K)] 341209K->278376K(466432K), [Metaspace: 2706K->2706K(1056768K)], 0.0646989 secs] [Times: user=0.12 sys=0.01, real=0.07 secs]
+[GC (Allocation Failure) [PSYoungGen: 58880K->19785K(116736K)] 337256K->298162K(466432K), 0.0051187 secs] [Times: user=0.01 sys=0.00, real=0.00 secs]
+执行结束!共生成对象次数:5292
+Heap
+ PSYoungGen      total 116736K, used 45446K [0x00000007b5580000, 0x00000007c0000000, 0x00000007c0000000)
+  eden space 58880K, 43% used [0x00000007b5580000,0x00000007b6e8f3d8,0x00000007b8f00000)
+  from space 57856K, 34% used [0x00000007bc780000,0x00000007bdad2570,0x00000007c0000000)
+  to   space 57856K, 0% used [0x00000007b8f00000,0x00000007b8f00000,0x00000007bc780000)
+ ParOldGen       total 349696K, used 278376K [0x00000007a0000000, 0x00000007b5580000, 0x00000007b5580000)
+  object space 349696K, 79% used [0x00000007a0000000,0x00000007b0fda3a8,0x00000007b5580000)
+ Metaspace       used 2712K, capacity 4486K, committed 4864K, reserved 1056768K
+  class space    used 294K, capacity 386K, committed 512K, reserved 1048576K
+```
+
+- CMS
 ```java
 [/Users/caiguangming/my-work/my-dome] java -XX:+UseConcMarkSweepGC -Xmx2g -Xms2g -XX:+PrintGCDetails GCLogAnalysis
 正在执行...
