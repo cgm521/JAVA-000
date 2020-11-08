@@ -33,6 +33,7 @@ public class ServerConfigController {
 
     @Resource
     private RedisUtil redisUtil;
+
     /**
      * 服务注册
      *
@@ -67,11 +68,9 @@ public class ServerConfigController {
         if (!REMOTE_ADDRESS_MAP.containsKey(app)) {
             return;
         } else {
-            synchronized (REMOTE_ADDRESS_MAP) {
-                Set<String> set = REMOTE_ADDRESS_MAP.get(app);
-                set.remove(remoteAddress);
-                redisUtil.del(REMOTE_ADDRESS_STATUS_KEY + app);
-            }
+            Set<String> set = REMOTE_ADDRESS_MAP.get(app);
+            set.remove(remoteAddress);
+            redisUtil.del(REMOTE_ADDRESS_STATUS_KEY + app);
         }
         log.info("应用{}地址销毁成功，address:{}", app, remoteAddress);
     }
