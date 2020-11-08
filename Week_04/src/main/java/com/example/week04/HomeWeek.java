@@ -113,6 +113,7 @@ public class HomeWeek {
         });
         thread.start();
         synchronized (mutex) {
+            // 防止子线程先执行完，wait后，没人notify
             if (sum.get() == 0) {
                 mutex.wait();
             }
@@ -143,6 +144,7 @@ public class HomeWeek {
         });
         thread.start();
         lock.lock();
+        // 防止子线程先执行完，wait后，没人signal
         if (sum.get() == 0) {
             condition.await();
         }
@@ -175,10 +177,33 @@ public class HomeWeek {
 
     /**
      * 通过设置外部变量保存结果，
+     * CyclicBarrier初始值为2
+     * 子线程计算完成后，与主线程互相等待，一起退出，主线程获取结果后退出
+     * @throws BrokenBarrierException
+     * @throws InterruptedException
+     */
+    @Test
+    public void test7() throws BrokenBarrierException, InterruptedException {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
+        AtomicInteger sum = new AtomicInteger();
+        Thread thread = new Thread(() -> {
+            try {
+                sum.set(sum());
+                cyclicBarrier.await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+        cyclicBarrier.await();
+        System.out.println("sum=" + sum.get());
+    }
+    /**
+     * 通过设置外部变量保存结果，
      * 主线程先park，通过CyclicBarrier的barrierAction唤醒主线程，然后获取结果
      */
     @Test
-    public void test7() {
+    public void test8() {
         Thread currentThread = Thread.currentThread();
         CyclicBarrier cyclicBarrier = new CyclicBarrier(1, () -> {
             // 如果先unpark，后park，也没有关系，
@@ -209,7 +234,7 @@ public class HomeWeek {
     private static volatile boolean isOver = false;
 
     @Test
-    public void test8() {
+    public void test9() {
         CyclicBarrier cyclicBarrier = new CyclicBarrier(1, () -> {
             isOver = true;
         });
@@ -237,7 +262,7 @@ public class HomeWeek {
      * @throws InterruptedException
      */
     @Test
-    public void test9() throws InterruptedException {
+    public void test10() throws InterruptedException {
         Semaphore semaphore = new Semaphore(0);
         AtomicInteger sum = new AtomicInteger();
         Thread thread = new Thread(() -> {
@@ -260,7 +285,7 @@ public class HomeWeek {
      * @throws InterruptedException
      */
     @Test
-    public void test10() throws InterruptedException {
+    public void test11() throws InterruptedException {
         ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1);
 //        LinkedBlockingQueue<Integer> queue = new LinkedBlockingQueue<Integer>(1);
         Thread thread = new Thread(() -> {
@@ -284,7 +309,7 @@ public class HomeWeek {
      * @throws InterruptedException
      */
     @Test
-    public void test11() throws ExecutionException, InterruptedException {
+    public void test12() throws ExecutionException, InterruptedException {
         FutureTask<Integer> futureTask = new FutureTask<Integer>(new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
@@ -300,7 +325,7 @@ public class HomeWeek {
      * 利用CompletableFuture执行异步任务，然后主线程中会等待子线程结束，然后获取子线程的结果
      */
     @Test
-    public void test12() {
+    public void test13() {
 //        CompletableFuture.supplyAsync(HomeWeek::sum).thenAccept(System.out::println);
         CompletableFuture.supplyAsync(()->{
             System.out.println(Thread.currentThread().getName() + "=执行计算=");
@@ -315,7 +340,7 @@ public class HomeWeek {
     /*********  线程池   ********/
 
     @Test
-    public void test13() throws ExecutionException, InterruptedException {
+    public void test14() throws ExecutionException, InterruptedException {
         Callable<Integer> callable = new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
@@ -337,7 +362,7 @@ public class HomeWeek {
      * @throws InterruptedException
      */
     @Test
-    public void test14() throws ExecutionException, InterruptedException {
+    public void test15() throws ExecutionException, InterruptedException {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Integer> submit = executorService.submit(HomeWeek::sum);
         Integer sum = submit.get();
