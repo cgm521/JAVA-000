@@ -331,7 +331,7 @@ public class HomeWeek {
 
     /**
      * 创建一个单线程的线程池
-     * 使用submit提交割具有返回值的任务
+     * 使用submit提交一个具有返回值的任务
      * 主线程阻塞获取结果
      * @throws ExecutionException
      * @throws InterruptedException
