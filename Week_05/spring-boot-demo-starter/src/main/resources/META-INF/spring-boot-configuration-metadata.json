@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "my.student.enabled",
+      "type": "java.lang.Boolean",
+    },
+    {
+      "name": "my.student.id",
+      "type": "java.lang.Integer"
+    },
+    {
+      "name": "my.student.name",
+      "type": "java.lang.String"
+    }
+  ]
+}
