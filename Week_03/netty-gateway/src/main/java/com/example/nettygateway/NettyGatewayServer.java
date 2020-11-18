@@ -13,9 +13,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +28,8 @@ import org.springframework.stereotype.Component;
 public class NettyGatewayServer {
     @Value("${server.netty.port}")
     private String serverNettyPort;
+    @Autowired
+    private HttpInboundHandler httpInboundHandler;
 
     public void run() {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -56,7 +57,7 @@ public class NettyGatewayServer {
                     ChannelPipeline p = ch.pipeline();
                     p.addLast(new HttpServerCodec());
                     p.addLast(new HttpObjectAggregator(1024 * 1024));
-                    p.addLast(ApplicationContextProvider.getBean(HttpInboundHandler.class));
+                    p.addLast(httpInboundHandler);
                 }
             });
             int port = Integer.parseInt(serverNettyPort);
