@@ -1,8 +1,10 @@
 package com.example.mydal.dao;
 
 import com.example.mydal.entity.Order;
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+@Mapper
 public interface OrderMapper {
     int deleteByPrimaryKey(Long id);
 

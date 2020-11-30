@@ -9,5 +9,6 @@ package com.example.mydal.enums;
 public enum SequenceEnum {
     USER,
     ORDER,
-    GOODS
+    GOODS,
+    ORDER_GOODS_DETAILS
 }

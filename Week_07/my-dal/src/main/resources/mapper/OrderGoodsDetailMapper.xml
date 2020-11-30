@@ -3,8 +3,9 @@
 <mapper namespace="com.example.mydal.dao.OrderGoodsDetailMapper">
   <resultMap id="BaseResultMap" type="com.example.mydal.entity.OrderGoodsDetail">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
     <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="snapshot_real_payment" jdbcType="DECIMAL" property="snapshotRealPayment" />
     <result column="snapshot_price" jdbcType="DECIMAL" property="snapshotPrice" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -13,24 +14,25 @@
   </delete>
   <insert id="insert" parameterType="com.example.mydal.entity.OrderGoodsDetail">
     insert into order_goods_detail (id, order_id, goods_id, 
-      snapshot_price)
-    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, 
-      #{snapshotPrice,jdbcType=DECIMAL})
+      snapshot_real_payment, snapshot_price)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{snapshotRealPayment,jdbcType=DECIMAL}, #{snapshotPrice,jdbcType=DECIMAL})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.example.mydal.entity.OrderGoodsDetail">
     update order_goods_detail
-    set order_id = #{orderId,jdbcType=VARCHAR},
+    set order_id = #{orderId,jdbcType=BIGINT},
       goods_id = #{goodsId,jdbcType=BIGINT},
+      snapshot_real_payment = #{snapshotRealPayment,jdbcType=DECIMAL},
       snapshot_price = #{snapshotPrice,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, order_id, goods_id, snapshot_price
+    select id, order_id, goods_id, snapshot_real_payment, snapshot_price
     from order_goods_detail
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, order_id, goods_id, snapshot_price
+    select id, order_id, goods_id, snapshot_real_payment, snapshot_price
     from order_goods_detail
   </select>
 </mapper>

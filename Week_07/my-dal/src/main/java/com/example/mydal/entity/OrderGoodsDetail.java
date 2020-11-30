@@ -6,9 +6,11 @@ import java.math.BigDecimal;
 public class OrderGoodsDetail implements Serializable {
     private Long id;
 
-    private String orderId;
+    private Long orderId;
 
     private Long goodsId;
+
+    private BigDecimal snapshotRealPayment;
 
     private BigDecimal snapshotPrice;
 
@@ -22,12 +24,12 @@ public class OrderGoodsDetail implements Serializable {
         this.id = id;
     }
 
-    public String getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Long getGoodsId() {
@@ -36,6 +38,14 @@ public class OrderGoodsDetail implements Serializable {
 
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public BigDecimal getSnapshotRealPayment() {
+        return snapshotRealPayment;
+    }
+
+    public void setSnapshotRealPayment(BigDecimal snapshotRealPayment) {
+        this.snapshotRealPayment = snapshotRealPayment;
     }
 
     public BigDecimal getSnapshotPrice() {
@@ -55,6 +65,7 @@ public class OrderGoodsDetail implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", orderId=").append(orderId);
         sb.append(", goodsId=").append(goodsId);
+        sb.append(", snapshotRealPayment=").append(snapshotRealPayment);
         sb.append(", snapshotPrice=").append(snapshotPrice);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

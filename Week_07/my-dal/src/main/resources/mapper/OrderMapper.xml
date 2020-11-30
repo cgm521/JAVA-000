@@ -1,75 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mydal.dao.OrderMapper">
-  <resultMap id="BaseResultMap" type="com.example.mydal.entity.Order">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
-    <result column="order_money" jdbcType="DECIMAL" property="orderMoney" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from order
+    <resultMap id="BaseResultMap" type="com.example.mydal.entity.Order">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="order_sum_money" jdbcType="DECIMAL" property="orderSumMoney"/>
+        <result column="order_money" jdbcType="DECIMAL" property="orderMoney"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `order`
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.example.mydal.entity.Order">
-    insert into order (id, user_id, goods_id, 
-      order_money, create_date, modify_date
-      )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
-      #{orderMoney,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}
-      )
+    <insert id="insert" parameterType="com.example.mydal.entity.Order">
+    insert into `order` (id, user_id, order_sum_money,
+      order_money, `status`, create_date,
+      modify_date)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orderSumMoney,jdbcType=DECIMAL},
+      #{orderMoney,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, now(),
+      now())
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.example.mydal.entity.Order">
-    update order
-    set user_id = #{userId,jdbcType=BIGINT},
-      goods_id = #{goodsId,jdbcType=BIGINT},
-      order_money = #{orderMoney,jdbcType=DECIMAL},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, user_id, goods_id, order_money, create_date, modify_date
-    from order
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_id, goods_id, order_money, create_date, modify_date
-    from order
-  </select>
-  <resultMap id="BaseResultMap" type="com.example.mydal.entity.Order">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="order_money" jdbcType="DECIMAL" property="orderMoney" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from order
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.example.mydal.entity.Order">
-    insert into order (id, user_id, order_money, 
-      create_date, modify_date)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orderMoney,jdbcType=DECIMAL}, 
-      now(), now())
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.example.mydal.entity.Order">
-    update order
-    set user_id = #{userId,jdbcType=BIGINT},
-      order_money = #{orderMoney,jdbcType=DECIMAL},
-      modify_date = now()
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, user_id, order_money, create_date, modify_date
-    from order
+    <update id="updateByPrimaryKey" parameterType="com.example.mydal.entity.Order">
+        update `order`
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                order_sum_money = #{orderSumMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="userId != null">
+                order_money = #{orderMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="userId != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            modify_date = now()
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, user_id, order_sum_money, order_money, `status`, create_date, modify_date
+    from `order`
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_id, order_money, create_date, modify_date
-    from order
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, order_sum_money, order_money, `status`, create_date, modify_date
+    from `order`
   </select>
 </mapper>

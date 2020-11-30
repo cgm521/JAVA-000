@@ -15,6 +15,25 @@
     delete from goods
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  <update id="updateByPrimaryKey" parameterType="com.example.mydal.entity.Goods">
+    update goods
+    <set>
+      <if test="name !=null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="marketingPrice !=null">
+        marketing_price = #{marketingPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="count !=null">
+        `count` = #{count,jdbcType=BIGINT},
+      </if>
+      <if test="status !=null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      modify_date = now()
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
   <insert id="insert" parameterType="com.example.mydal.entity.Goods">
     insert into goods (id, `name`, price, 
       marketing_price, `count`, `status`, 
@@ -23,16 +42,6 @@
       #{marketingPrice,jdbcType=DECIMAL}, #{count,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, 
       now(), now())
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.example.mydal.entity.Goods">
-    update goods
-    set `name` = #{name,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      marketing_price = #{marketingPrice,jdbcType=DECIMAL},
-      `count` = #{count,jdbcType=BIGINT},
-      `status` = #{status,jdbcType=VARCHAR},
-      modify_date = now()
-    where id = #{id,jdbcType=BIGINT}
-  </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, `name`, price, marketing_price, `count`, `status`, create_date, modify_date
     from goods

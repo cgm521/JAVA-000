@@ -9,9 +9,11 @@ public class Order implements Serializable {
 
     private Long userId;
 
-    private Long goodsId;
+    private BigDecimal orderSumMoney;
 
     private BigDecimal orderMoney;
+
+    private String status;
 
     private Date createDate;
 
@@ -35,12 +37,12 @@ public class Order implements Serializable {
         this.userId = userId;
     }
 
-    public Long getGoodsId() {
-        return goodsId;
+    public BigDecimal getOrderSumMoney() {
+        return orderSumMoney;
     }
 
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
+    public void setOrderSumMoney(BigDecimal orderSumMoney) {
+        this.orderSumMoney = orderSumMoney;
     }
 
     public BigDecimal getOrderMoney() {
@@ -49,6 +51,14 @@ public class Order implements Serializable {
 
     public void setOrderMoney(BigDecimal orderMoney) {
         this.orderMoney = orderMoney;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public Date getCreateDate() {
@@ -75,8 +85,9 @@ public class Order implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
-        sb.append(", goodsId=").append(goodsId);
+        sb.append(", orderSumMoney=").append(orderSumMoney);
         sb.append(", orderMoney=").append(orderMoney);
+        sb.append(", status=").append(status);
         sb.append(", createDate=").append(createDate);
         sb.append(", modifyDate=").append(modifyDate);
         sb.append(", serialVersionUID=").append(serialVersionUID);
