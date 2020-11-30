@@ -24,7 +24,6 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
     `id`          bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
-    `user_id`     varchar(64)  NOT NULL COMMENT '用户id',
     `name`        varchar(255) NOT NULL COMMENT '客户名称',
     `mobile`      varchar(255) NOT NULL COMMENT '手机号',
     `password`    varchar(255) NOT NULL COMMENT '密码',
