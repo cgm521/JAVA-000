@@ -40,25 +40,32 @@ class UserMapperTest {
 
     @Test
     void batchInsert() {
-        Long mobile = 13000000000L;
+        Long mobile = 13000000200L;
         String password = "123456";
         String[] names = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        Random rand = new Random();
-        for (int i = 0; i < 200; i++) {
-            int n1 = rand.nextInt(names.length);
-            int n2 = rand.nextInt(names.length);
-            int n3 = rand.nextInt(names.length);
-            String name = names[n1] + names[n2] + names[n3];
-            User user = new User();
-            user.setId(sequenceSupport.getSequence(SequenceEnum.USER));
-            user.setName(name);
-            mobile++;
-            user.setMobile(String.valueOf(mobile));
-            user.setPassword(password);
-            userMapper.insert(user);
-
+        int index = 0;
+        long startTime = System.currentTimeMillis();
+        for (String element : names) {
+            for (String item : names) {
+                for (String value : names) {
+                    for (String s : names) {
+                        String name = element + item + value + s;
+                        User user = new User();
+                        user.setId(sequenceSupport.getSequence(SequenceEnum.USER));
+                        user.setName(name);
+                        mobile++;
+                        user.setMobile(String.valueOf(mobile));
+                        user.setPassword(password);
+                        userMapper.insert(user);
+                        if (index++ >= 1000000) {
+                            break;
+                        }
+                    }
+                }
+            }
         }
-
+        System.out.println("end....");
+        System.out.println(System.currentTimeMillis() - startTime);
     }
 
     @Test

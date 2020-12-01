@@ -5,8 +5,8 @@ import com.example.mydal.dao.GoodsMapper;
 import com.example.mydal.dao.UserMapper;
 import com.example.mydal.entity.Goods;
 import com.example.mydal.entity.User;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
+import com.example.mydal.service.GoodsService;
+import com.example.mydal.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,17 +24,17 @@ class OrderBizTest extends BaseTest {
     @Resource
     private OrderBiz orderBiz;
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
     @Resource
-    private GoodsMapper goodsMapper;
+    private GoodsService goodsService;
 
     private static List<User> users;
     private static List<Goods> goods;
 
     @BeforeEach
     void before() {
-        users = userMapper.selectAll();
-        goods = goodsMapper.selectAll();
+        users = userService.selectAll();
+        goods = goodsService.selectAll();
     }
 
     @Test

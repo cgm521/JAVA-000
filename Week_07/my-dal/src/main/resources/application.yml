@@ -1,10 +1,18 @@
-spring:
+mysql:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/mall_db?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: 123456
-    name: test
-    driver-class-name: com.mysql.jdbc.Driver
-mybatis:
-  type-aliases-package: com.example.cgm.entity
-  mapper-locations: classpath:mapper/**Mapper.xml
+    num: 1
+    type-aliases-package: com.example.cgm.entity
+    mapper-locations: classpath:mapper/**Mapper.xml
+    write:
+      jdbc-url: jdbc:mysql://127.0.0.1:3307/mall_db?useSSL=false&useUnicode=true&characterEncoding=utf8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+    read1:
+      jdbc-url: jdbc:mysql://127.0.0.1:3308/mall_db?useSSL=false&useUnicode=true&characterEncoding=utf8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+#mybatis:
+#  type-aliases-package: com.example.cgm.entity
+#  mapper-locations: classpath:mapper/**Mapper.xml

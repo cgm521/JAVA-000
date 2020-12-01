@@ -1,5 +1,6 @@
 package com.example.mydal.service.impl;
 
+import com.example.mydal.annotation.ReadOnly;
 import com.example.mydal.dao.GoodsMapper;
 import com.example.mydal.entity.Goods;
 import com.example.mydal.enums.GoodsStatusEnum;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author:wb-cgm503374
@@ -19,6 +21,11 @@ import javax.annotation.Resource;
 public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsMapper goodsMapper;
+
+    @Override
+    public List<Goods> selectAll() {
+        return goodsMapper.selectAll();
+    }
 
     @Override
     public Goods selectById(Long id) {
