@@ -1,21 +1,17 @@
 package com.example.mydal.db;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -23,7 +19,7 @@ import java.util.Map;
 
 /**
  * @Author:wb-cgm503374
- * @Description
+ * @Description 数据源配置
  * @Date:Created in 2020/12/1 9:52 下午
  */
 
@@ -34,7 +30,6 @@ public class DataSourceConfig {
     private String typeAliasesPackage;
     @Value("${mysql.datasource.mapper-locations}")
     private String mapperLocation;
-    private String configLocation;
 
     @Primary
     @Bean

@@ -5,26 +5,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 /**
  * @Author:wb-cgm503374
- * @Description
+ * @Description 读接口切面，设置读数据源
  * @Date:Created in 2020/12/1 9:59 下午
  */
 @Slf4j
 @Aspect
 @Component
 public class ReadOnlyAspect implements Ordered {
-    @Pointcut("@annotation(readOnly) || execution(public * com.example.mydal.service.*.select*(..))")
-    public void pointcut(ReadOnly readOnly) {
 
-    }
-
-    @Around("pointcut(readOnly)")
-    public Object setRead(ProceedingJoinPoint joinPoint, ReadOnly readOnly) throws Throwable {
+    @Around("@annotation(ReadOnly) || execution(public * com.example.mydal.service.*.select*(..)) || execution(public * com.example.mydal.service.*.get*(..))")
+    public Object setRead(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             DbContextHolder.setDbType(DbContextHolder.READ);
             return joinPoint.proceed();

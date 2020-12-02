@@ -12,12 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author:wb-cgm503374
- * @Description
+ * @Description ID生成器
  * @Date:Created in 2020/11/29 10:22 下午
  */
 @Service
 public class SequenceSupport implements InitializingBean {
+    // 每次取100
     private static final Long STEP_SIZE = 100L;
+    // 按照业务区分序列值
     private static Map<SequenceEnum, SequenceRange> map = new ConcurrentHashMap<>();
     @Resource
     private SequenceMapper sequenceMapper;
