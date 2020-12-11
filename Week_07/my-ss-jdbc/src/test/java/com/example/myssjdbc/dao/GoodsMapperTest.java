@@ -1,9 +1,9 @@
-package com.example.mydal.dao;
+package com.example.myssjdbc.dao;
 
-import com.example.mydal.BaseTest;
-import com.example.mydal.entity.Goods;
-import com.example.mydal.enums.GoodsStatusEnum;
-import com.example.mydal.enums.SequenceEnum;
+import com.example.myssjdbc.BaseTest;
+import com.example.myssjdbc.entity.Goods;
+import com.example.myssjdbc.enums.GoodsStatusEnum;
+import com.example.myssjdbc.enums.SequenceEnum;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;

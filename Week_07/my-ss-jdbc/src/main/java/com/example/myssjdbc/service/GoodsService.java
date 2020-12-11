@@ -1,6 +1,6 @@
-package com.example.mydal.service;
+package com.example.myssjdbc.service;
 
-import com.example.mydal.entity.Goods;
+import com.example.myssjdbc.entity.Goods;
 
 import java.util.List;
 

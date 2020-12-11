@@ -1,9 +1,9 @@
-package com.example.mydal.service.impl;
+package com.example.myssjdbc.service.impl;
 
-import com.example.mydal.dao.GoodsMapper;
-import com.example.mydal.entity.Goods;
-import com.example.mydal.enums.GoodsStatusEnum;
-import com.example.mydal.service.GoodsService;
+import com.example.myssjdbc.dao.GoodsMapper;
+import com.example.myssjdbc.entity.Goods;
+import com.example.myssjdbc.enums.GoodsStatusEnum;
+import com.example.myssjdbc.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

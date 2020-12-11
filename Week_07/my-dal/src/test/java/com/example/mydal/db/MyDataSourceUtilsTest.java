@@ -8,8 +8,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * @Author:wb-cgm503374
  * @Description

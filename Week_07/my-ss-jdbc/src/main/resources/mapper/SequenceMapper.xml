@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myssjdbc.dao.SequenceMapper">
+  <resultMap id="BaseResultMap" type="com.example.myssjdbc.entity.Sequence">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="value" jdbcType="BIGINT" property="value" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sequence
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.myssjdbc.entity.Sequence">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sequence (`name`, `value`, create_date, 
+      modify_date)
+    values (#{name,jdbcType=VARCHAR}, #{value,jdbcType=BIGINT}, now(),
+      now())
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.myssjdbc.entity.Sequence">
+    update sequence
+    set `name` = #{name,jdbcType=VARCHAR},
+      `value` = #{value,jdbcType=BIGINT},
+      modify_date = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, `name`, `value`, create_date, modify_date
+    from sequence
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, `name`, `value`, create_date, modify_date
+    from sequence
+  </select>
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, `name`, `value`, create_date, modify_date
+    from sequence
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+</mapper>

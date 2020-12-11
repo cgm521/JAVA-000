@@ -16,3 +16,5 @@
  [切面配置方法使用的数据源](my-dal/src/main/java/com/example/mydal/annotation/ReadOnlyAspect.java)
 
  # 14.3 读写分离-数据库框架版本2.0
+ [配置文件](my-ss-jdbc/src/main/resources/application.yml)
+ [测试类](my-ss-jdbc/src/test/java/com/example/myssjdbc/dao/UserMapperTest.java#L30)

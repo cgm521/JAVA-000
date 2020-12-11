@@ -1,10 +1,10 @@
-package com.example.mydal.biz;
+package com.example.myssjdbc.biz;
 
-import com.example.mydal.BaseTest;
-import com.example.mydal.entity.Goods;
-import com.example.mydal.entity.User;
-import com.example.mydal.service.GoodsService;
-import com.example.mydal.service.UserService;
+import com.example.myssjdbc.BaseTest;
+import com.example.myssjdbc.entity.Goods;
+import com.example.myssjdbc.entity.User;
+import com.example.myssjdbc.service.GoodsService;
+import com.example.myssjdbc.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
