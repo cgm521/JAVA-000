@@ -11,6 +11,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.*;
+import io.netty.util.AttributeKey;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,16 +23,17 @@ import java.net.URISyntaxException;
  */
 
 public class NettyClient {
-    private static EventLoopGroup workerGroup = new NioEventLoopGroup();
-    private static Bootstrap b = new Bootstrap();
+    private static Bootstrap b;
 
     static {
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        b = new Bootstrap();
         b.group(workerGroup);
         b.channel(NioSocketChannel.class);
         b.option(ChannelOption.SO_KEEPALIVE, true);
     }
 
-    private static Object handle(RpcfxRequest param, String url) {
+    public static Object handle(RpcfxRequest param, String url) {
         try {
 
             URI uri = new URI(url);
@@ -64,11 +66,12 @@ public class NettyClient {
             f = b.connect(host, port).sync();
             f.channel().writeAndFlush(request);
             f.channel().closeFuture().sync();
-            //b.handler(channelInitializer);
-            //    // start the client.
-            //ChannelFuture  f = b.connect(host, port).sync();
-            //// 等待与远程http服务器断开连接
-            //f.channel().closeFuture().sync();
+
+            //接收服务端返回的数据
+            AttributeKey<String> key = AttributeKey.valueOf("ServerData");
+            Object result = f.channel().attr(key).get();
+            System.out.println(result.toString());
+            return result;
         } catch (URISyntaxException | InterruptedException e) {
             e.printStackTrace();
         }

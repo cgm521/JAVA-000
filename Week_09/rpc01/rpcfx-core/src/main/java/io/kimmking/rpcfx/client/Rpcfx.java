@@ -50,6 +50,8 @@ public final class Rpcfx {
             request.setMethod(method.getName());
             request.setParams(params);
 
+            Object handle = NettyClient.handle(request, url);
+            System.out.println("----------");
             RpcfxResponse response = post(request, url);
 
             // 这里判断response.status，处理异常
