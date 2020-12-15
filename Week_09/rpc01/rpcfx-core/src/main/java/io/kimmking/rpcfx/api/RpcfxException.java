@@ -28,7 +28,10 @@ public class RpcfxException extends Exception {
 
     public enum ErrorCode {
         SYS_ERROR("SYS_ERROR", "系统错误"),
-        CLASS_NOT_FIND("CLASS_NOT_FIND", "classNotFind");
+        CLASS_NOT_FIND("CLASS_NOT_FIND", "classNotFind"),
+        IO_EXCEPTION("IO_EXCEPTION", "IOException"),
+
+        ;
         private String code;
         private String message;
 

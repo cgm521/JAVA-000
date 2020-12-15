@@ -44,7 +44,6 @@ public class RpcfxInvoker {
             response.setStatus(false);
             return response;
         } catch (Exception e) {
-
             // 3.Xstream
 
             // 2.封装一个统一的RpcfxException

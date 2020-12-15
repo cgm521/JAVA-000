@@ -27,6 +27,7 @@ public class RpcfxServerApplication {
 
 	@PostMapping("/")
 	public RpcfxResponse invoke(@RequestBody RpcfxRequest request) {
+		System.out.println("invoke...");
 		return invoker.invoke(request);
 	}
 

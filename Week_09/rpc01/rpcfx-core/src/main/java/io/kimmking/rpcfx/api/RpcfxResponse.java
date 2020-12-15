@@ -31,4 +31,11 @@ public class RpcfxResponse {
     public void setException(RpcfxException exception) {
         this.exception = exception;
     }
+
+    public static RpcfxResponse createFail(RpcfxException exception) {
+        RpcfxResponse response = new RpcfxResponse();
+        response.setStatus(false);
+        response.setException(exception);
+        return response;
+    }
 }
