@@ -7,11 +7,7 @@ import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
 import io.kimmking.rpcfx.client.HttpClientUtil;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -54,11 +50,11 @@ public final class Rpcfx {
 
 //            Object handle = NettyClient.handle(request, url);
             System.out.println("----------");
-            RpcfxResponse response = HttpClientUtil.post(request, url);
+            RpcfxResponse response = HttpClientUtil.postJson(request, url);
             // 这里判断response.status，处理异常
             // 考虑封装一个全局的RpcfxException
             if (response.isStatus()) {
-                return JSON.parse(response.getResult().toString());
+                return JSON.parseObject(response.getResult().toString(), Class.forName(response.getClassName()));
             } else {
                 response.getException().printStackTrace();
                 throw response.getException();

@@ -2,6 +2,8 @@ package io.kimmking.rpcfx.server;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import io.kimmking.rpcfx.api.RpcfxException;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResolver;
@@ -14,6 +16,8 @@ import java.util.Arrays;
 public class RpcfxInvoker {
 
     private RpcfxResolver resolver;
+
+    private XStream xstream = new XStream(new DomDriver());
 
     public RpcfxInvoker(RpcfxResolver resolver) {
         this.resolver = resolver;
@@ -30,7 +34,8 @@ public class RpcfxInvoker {
             Method method = resolveMethodFromClass(service.getClass(), request.getMethod());
             Object result = method.invoke(service, request.getParams()); // dubbo, fastjson,
             // 两次json序列化能否合并成一个
-            response.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
+            response.setResult(result);
+            response.setClassName(result.getClass().getName());
             response.setStatus(true);
             return response;
         } catch (ClassNotFoundException e) {
@@ -53,6 +58,14 @@ public class RpcfxInvoker {
             response.setStatus(false);
             return response;
         }
+    }
+
+
+    public String invokeXml(String request) {
+        RpcfxRequest rpcfxRequest = (RpcfxRequest) xstream.fromXML(request);
+        RpcfxResponse response = invoke(rpcfxRequest);
+        return xstream.toXML(response);
+
     }
 
     private Method resolveMethodFromClass(Class<?> klass, String methodName) {

@@ -38,7 +38,7 @@ public class CglibRpcfx {
                 request.setMethod(method.getName());
                 request.setParams(params);
                 RpcfxResponse response = post(request, url);
-                return JSON.parse(response.getResult().toString());
+                return JSON.parseObject(response.getResult().toString(), Class.forName(response.getClassName()));
             }
         });
         return (T) enhancer.create();

@@ -4,6 +4,8 @@ public class RpcfxResponse {
 
     private Object result;
 
+    private String className;
+
     private boolean status;
 
     private RpcfxException exception;
@@ -14,6 +16,14 @@ public class RpcfxResponse {
 
     public void setResult(Object result) {
         this.result = result;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public boolean isStatus() {

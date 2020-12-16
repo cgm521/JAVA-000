@@ -25,7 +25,6 @@ public class RpcfxClientApplication {
         UserService userService = ByteBuddyRpcfx.create(UserService.class, "http://localhost:8080/");
         User user = userService.findById(1);
         System.out.println("find user id=1 from server: " + user.getName());
-        System.out.println("111111>>>" + userService);
 
 
 //        OrderService orderService = CglibRpcfx.create(OrderService.class, "http://localhost:8080/");

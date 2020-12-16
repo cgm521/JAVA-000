@@ -1,12 +1,16 @@
 package io.kimmking.rpcfx.api;
 
+import io.kimmking.rpcfx.enums.BodyTypeEnum;
+
 public class RpcfxRequest {
 
-  private String serviceClass;
+    private String serviceClass;
 
-  private String method;
+    private String method;
 
-  private Object[] params;
+    private Object[] params;
+
+    private BodyTypeEnum bodyType;
 
     public String getServiceClass() {
         return serviceClass;
@@ -30,5 +34,13 @@ public class RpcfxRequest {
 
     public void setParams(Object[] params) {
         this.params = params;
+    }
+
+    public BodyTypeEnum getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(BodyTypeEnum bodyType) {
+        this.bodyType = bodyType;
     }
 }

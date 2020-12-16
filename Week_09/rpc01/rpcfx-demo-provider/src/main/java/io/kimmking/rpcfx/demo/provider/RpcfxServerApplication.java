@@ -31,6 +31,12 @@ public class RpcfxServerApplication {
 		return invoker.invoke(request);
 	}
 
+	@PostMapping("/xml")
+	public String invokeXml(@RequestBody String request) {
+		System.out.println("invoke...");
+		return invoker.invokeXml(request);
+	}
+
 	@Bean
 	public RpcfxInvoker createInvoker(@Autowired RpcfxResolver resolver){
 		return new RpcfxInvoker(resolver);

@@ -44,19 +44,30 @@ public class ByteBuddyRpcfx {
         }
 
         @RuntimeType
-        public Object intercept(@Origin String method, @AllArguments Object[] params) throws RpcfxException {
+        public Object intercept(@Origin String method, @AllArguments Object[] params) throws Exception {
             RpcfxRequest request = new RpcfxRequest();
             request.setServiceClass(this.serviceClass);
             request.setMethod(method.substring(method.lastIndexOf(".") + 1, method.indexOf("(")));
             request.setParams(params);
-            Object handle = NettyClient.handle(request, url);
-            System.out.println(handle);
-            System.out.println("---");
-            return handle;
-//            RpcfxResponse response = HttpClientUtil.post(request, url);
-//            // 判断请求是否成功
+//            Object handle = NettyClient.handle(request, url);
+//            System.out.println(handle);
+//            System.out.println("---");
+//            return handle;
+            // xml
+            RpcfxResponse responseXml = HttpClientUtil.postXml(request, url);
+
+            // 判断请求是否成功
+            if (responseXml.isStatus()) {
+                return responseXml.getResult();
+            } else {
+                log.error("方法{}请求失败，exception:{}", method, responseXml.getException());
+                throw responseXml.getException();
+            }
+
+            // json
+//            RpcfxResponse response = HttpClientUtil.postJson(request, url);
 //            if (response.isStatus()) {
-//                return JSON.parse(response.getResult().toString());
+//                return JSON.parseObject(JSON.toJSONString(responseXml.getResult()), Class.forName(response.getClassName()));
 //            } else {
 //                log.error("方法{}请求失败，exception:{}", method, response.getException());
 //                throw response.getException();
