@@ -49,20 +49,22 @@ public class ByteBuddyRpcfx {
             request.setServiceClass(this.serviceClass);
             request.setMethod(method.substring(method.lastIndexOf(".") + 1, method.indexOf("(")));
             request.setParams(params);
-//            Object handle = NettyClient.handle(request, url);
-//            System.out.println(handle);
-//            System.out.println("---");
-//            return handle;
+            Object res = NettyClient.handle(request, url);
+//            NettyClient nettyClient = new NettyClient(url);
+//            Object res = nettyClient.send(request);
+            System.out.println(res);
+            System.out.println("---");
+            return res;
             // xml
-            RpcfxResponse responseXml = HttpClientUtil.postXml(request, url);
-
-            // 判断请求是否成功
-            if (responseXml.isStatus()) {
-                return responseXml.getResult();
-            } else {
-                log.error("方法{}请求失败，exception:{}", method, responseXml.getException());
-                throw responseXml.getException();
-            }
+//            RpcfxResponse responseXml = HttpClientUtil.postXml(request, url);
+//
+//            // 判断请求是否成功
+//            if (responseXml.isStatus()) {
+//                return responseXml.getResult();
+//            } else {
+//                log.error("方法{}请求失败，exception:{}", method, responseXml.getException());
+//                throw responseXml.getException();
+//            }
 
             // json
 //            RpcfxResponse response = HttpClientUtil.postJson(request, url);

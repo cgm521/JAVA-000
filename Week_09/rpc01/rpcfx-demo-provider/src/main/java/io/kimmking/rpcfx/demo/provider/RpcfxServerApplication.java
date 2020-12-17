@@ -3,10 +3,12 @@ package io.kimmking.rpcfx.demo.provider;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResolver;
 import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.client.NettyServerClient;
 import io.kimmking.rpcfx.demo.api.OrderService;
 import io.kimmking.rpcfx.demo.api.UserService;
 import io.kimmking.rpcfx.server.RpcfxInvoker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,7 @@ public class RpcfxServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RpcfxServerApplication.class, args);
+		new NettyServerClient().run();
 	}
 
 	@Autowired
