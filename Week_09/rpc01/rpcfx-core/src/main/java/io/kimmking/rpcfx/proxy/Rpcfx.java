@@ -5,7 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
-import io.kimmking.rpcfx.io.client.HttpClientUtil;
+import io.kimmking.rpcfx.enums.BodyTypeEnum;
+import io.kimmking.rpcfx.io.client.HttpClient;
 import okhttp3.MediaType;
 
 import java.lang.reflect.InvocationHandler;
@@ -50,7 +51,7 @@ public final class Rpcfx {
 
 //            Object handle = NettyClient.handle(request, url);
             System.out.println("----------");
-            RpcfxResponse response = HttpClientUtil.postJson(request, url);
+            RpcfxResponse response = new HttpClient().send(request, url, BodyTypeEnum.XML);
             // 这里判断response.status，处理异常
             // 考虑封装一个全局的RpcfxException
             if (response.isStatus()) {

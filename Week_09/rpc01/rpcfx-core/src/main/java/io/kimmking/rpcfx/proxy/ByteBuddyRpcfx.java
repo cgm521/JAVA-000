@@ -1,8 +1,11 @@
 package io.kimmking.rpcfx.proxy;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import io.kimmking.rpcfx.api.RpcfxRequest;
-import io.kimmking.rpcfx.io.client.NettyClient;
+import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.enums.BodyTypeEnum;
+import io.kimmking.rpcfx.io.client.AbsClient;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -22,21 +25,29 @@ public class ByteBuddyRpcfx {
         ParserConfig.getGlobalInstance().addAccept("io.kimmking");
     }
 
-    public static <T> T create(final Class<T> serverClass, final String url) throws IllegalAccessException, InstantiationException {
+    private AbsClient client;
+
+    public ByteBuddyRpcfx(AbsClient client) {
+        this.client = client;
+    }
+
+    public <T> T create(final Class<T> serverClass, final String url) throws IllegalAccessException, InstantiationException {
         return new ByteBuddy()
                 .subclass(serverClass)
                 .method(ElementMatchers.any())
-                .intercept(MethodDelegation.to(new Intercept(url, serverClass.getName())))
+                .intercept(MethodDelegation.to(new Intercept(url, serverClass.getName(), client)))
                 .make().load(serverClass.getClassLoader()).getLoaded().newInstance();
     }
 
     public static class Intercept {
         private String url;
         private String serviceClass;
+        private AbsClient client;
 
-        public Intercept(String url, String serviceClass) {
+        public Intercept(String url, String serviceClass,AbsClient client) {
             this.url = url;
             this.serviceClass = serviceClass;
+            this.client = client;
         }
 
         @RuntimeType
@@ -45,12 +56,15 @@ public class ByteBuddyRpcfx {
             request.setServiceClass(this.serviceClass);
             request.setMethod(method.substring(method.lastIndexOf(".") + 1, method.indexOf("(")));
             request.setParams(params);
-            Object res = NettyClient.handle(request, url);
-//            NettyClient nettyClient = new NettyClient(url);
-//            Object res = nettyClient.send(request);
+            RpcfxResponse res = client.send(request, url, BodyTypeEnum.JSON);
             System.out.println(res);
             System.out.println("---");
-            return res;
+            if (res.isStatus()) {
+                return JSON.parseObject(JSON.toJSONString(res.getResult()), Class.forName(res.getClassName()));
+            } else {
+                log.error("方法{}请求失败，exception:{}", method, res.getException());
+                throw res.getException();
+            }
             // xml
 //            RpcfxResponse responseXml = HttpClientUtil.postXml(request, url);
 //

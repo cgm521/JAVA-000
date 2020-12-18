@@ -20,13 +20,25 @@ import java.io.IOException;
  * @Date:Created in 2020/12/15 下午9:27
  */
 
-public class HttpClientUtil {
+public class HttpClient extends AbsClient{
     public static final MediaType JSON_TYPE = MediaType.get("application/json; charset=utf-8");
     public static final MediaType XML_YPE = MediaType.get("application/xml");
     private static XStream xstream = new XStream(new DomDriver());
 
-    public static RpcfxResponse postJson(RpcfxRequest req, String url) {
-        req.setBodyType(BodyTypeEnum.JSON);
+    @Override
+    public RpcfxResponse send(RpcfxRequest request, String url, BodyTypeEnum bodyType) {
+        RpcfxResponse response = null;
+        switch (bodyType){
+            case XML:
+                response = postXml(request, url);
+                break;
+            case JSON:
+                response = postJson(request, url);
+        }
+        return response;
+    }
+
+    public RpcfxResponse postJson(RpcfxRequest req, String url) {
         String reqJson = JSON.toJSONString(req);
         System.out.println("req json: " + reqJson);
 
@@ -45,10 +57,8 @@ public class HttpClientUtil {
             return RpcfxResponse.createFail(RpcfxException.creatFailException(RpcfxException.ErrorCode.REQUEST_EXCEPTION, e));
         }
     }
-
     // xml 格式传输
-    public static RpcfxResponse postXml(RpcfxRequest req, String url) {
-        req.setBodyType(BodyTypeEnum.XML);
+    public RpcfxResponse postXml(RpcfxRequest req, String url) {
         String xml = xstream.toXML(req);
         System.out.println("req xml: " + xml);
 

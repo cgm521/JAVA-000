@@ -3,6 +3,10 @@ package io.kimmking.rpcfx.io.server;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.kimmking.rpcfx.api.RpcfxRequest;
+import io.kimmking.rpcfx.api.RpcfxResolver;
+import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.server.RpcfxInvoker;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -24,6 +28,12 @@ import java.util.List;
 @Slf4j
 public class ServerInboundHandler extends ChannelInboundHandlerAdapter {
 
+    private RpcfxResolver resolver;
+
+    public ServerInboundHandler(RpcfxResolver resolver) {
+        this.resolver = resolver;
+    }
+
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
         ctx.flush();
@@ -32,18 +42,13 @@ public class ServerInboundHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.println("msg>>>" + msg);
-        FullHttpRequest fullRequest = (FullHttpRequest)msg;
+        // 读取客户端请求，参数转换
+        RpcfxRequest rpcfxRequest = JSONObject.parseObject((String) msg, RpcfxRequest.class);
+        // 执行调用
+        RpcfxResponse response = new RpcfxInvoker(resolver).invoke(rpcfxRequest);
+        // 回写响应
+        ctx.write(Unpooled.copiedBuffer(JSON.toJSONString(response), CharsetUtil.UTF_8));
 
-        if (msg instanceof FullHttpRequest) {
-            String param = ((FullHttpRequest) msg).content().toString(CharsetUtil.UTF_8);
-            RpcfxRequest request = JSON.parseObject(param, RpcfxRequest.class);
-        }
-//        String param = parse(fullRequest);
-//        System.out.println("server param:" + param);
-
-        ctx.write("response").addListener(ChannelFutureListener.CLOSE);
-
-        fullRequest.release();
         ctx.flush();
     }
 
@@ -62,7 +67,7 @@ public class ServerInboundHandler extends ChannelInboundHandlerAdapter {
         List<InterfaceHttpData> parmList = decoder.getBodyHttpDatas();
         try {
             for (InterfaceHttpData param : parmList) {
-                Attribute data = (Attribute)param;
+                Attribute data = (Attribute) param;
                 jsonObject.put(data.getName(), data.getValue());
             }
         } catch (IOException e) {

@@ -1,5 +1,6 @@
 package io.kimmking.rpcfx.io.server;
 
+import io.kimmking.rpcfx.api.RpcfxResolver;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
@@ -9,8 +10,10 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.epoll.EpollChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.string.StringDecoder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NettyServerClient {
 
-    public void run() {
+    public void run(RpcfxResolver resolver) {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup workerGroup = new NioEventLoopGroup(16);
 
@@ -45,13 +48,13 @@ public class NettyServerClient {
                         @Override
                         protected void initChannel(Channel ch) throws Exception {
                             ChannelPipeline p = ch.pipeline();
-                            p.addLast(new HttpServerCodec());
-                            p.addLast(new HttpObjectAggregator(1024 * 1024));
-                            p.addLast(new ServerInboundHandler());
+                            p.addLast(new LineBasedFrameDecoder(Integer.MAX_VALUE));
+                            p.addLast(new StringDecoder());
+                            p.addLast(new ServerInboundHandler(resolver));
                         }
                     });
             Channel channel = bootstrap.bind(8081).sync().channel();
-            log.info("开启netty http服务器，监听地址和端口为 http://127.0.0.1:8080/");
+            log.info("开启netty http服务器，监听地址和端口为 http://127.0.0.1:8081/");
             channel.closeFuture().sync();
         } catch (InterruptedException e) {
             log.error("开启netty http服务器失败！！");
