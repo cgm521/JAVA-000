@@ -1,10 +1,9 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.io.client;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author:wb-cgm503374
@@ -20,13 +18,13 @@ import java.util.concurrent.TimeUnit;
  * @Date:Created in 2020/12/15 10:39
  */
 
-public class HttpClientInboundHandler extends ChannelInboundHandlerAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(HttpClientInboundHandler.class);
+public class ClientInboundHandler extends ChannelInboundHandlerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(ClientInboundHandler.class);
 
     private String requestUri;
     private byte[] param;
 
-    public HttpClientInboundHandler(String requestUri, byte[] param) {
+    public ClientInboundHandler(String requestUri, byte[] param) {
         this.requestUri = requestUri;
         this.param = param;
     }

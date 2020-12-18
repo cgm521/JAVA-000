@@ -1,4 +1,4 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.io.client;
 
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.RpcfxRequest;
@@ -13,7 +13,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import io.netty.util.AttributeKey;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -50,7 +49,7 @@ public class NettyClient {
                     ch.pipeline().addLast(new HttpRequestEncoder());
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
 
-                    ch.pipeline().addLast(new HttpClientInboundHandler(url, JSON.toJSONBytes(param)));
+                    ch.pipeline().addLast(new ClientInboundHandler(url, JSON.toJSONBytes(param)));
                 }
             };
             ChannelFuture f;

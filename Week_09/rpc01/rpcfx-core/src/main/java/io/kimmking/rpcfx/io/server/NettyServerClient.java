@@ -1,4 +1,4 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.io.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -47,7 +47,7 @@ public class NettyServerClient {
                             ChannelPipeline p = ch.pipeline();
                             p.addLast(new HttpServerCodec());
                             p.addLast(new HttpObjectAggregator(1024 * 1024));
-                            p.addLast(new HttpInboundHandler());
+                            p.addLast(new ServerInboundHandler());
                         }
                     });
             Channel channel = bootstrap.bind(8081).sync().channel();

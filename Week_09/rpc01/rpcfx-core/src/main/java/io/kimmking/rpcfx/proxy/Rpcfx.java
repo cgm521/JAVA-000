@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
-import io.kimmking.rpcfx.client.HttpClientUtil;
+import io.kimmking.rpcfx.io.client.HttpClientUtil;
 import okhttp3.MediaType;
 
 import java.lang.reflect.InvocationHandler;

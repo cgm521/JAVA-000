@@ -1,4 +1,4 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.io.client;
 
 import com.alibaba.fastjson.JSON;
 import com.thoughtworks.xstream.XStream;
