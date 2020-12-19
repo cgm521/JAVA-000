@@ -28,11 +28,12 @@ public class NettyClient extends AbsClient{
     private static Channel clientChannel;
 
     static {
-        workerGroup = new NioEventLoopGroup();
+        workerGroup = new NioEventLoopGroup(2);
         b = new Bootstrap();
         b.group(workerGroup);
         b.channel(NioSocketChannel.class);
-        b.option(ChannelOption.TCP_NODELAY, true);
+        b.option(ChannelOption.TCP_NODELAY, true)
+                .option(ChannelOption.SO_KEEPALIVE, false);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class NettyClient extends AbsClient{
             //接收服务端返回的数据
             String response = customerChannelInitializer.getResponse();
             // 客户端关闭
-            close();
+//            close();
             System.out.println("response>>" + response);
             return JSON.parseObject(response, RpcfxResponse.class);
         } catch (URISyntaxException | InterruptedException e) {
