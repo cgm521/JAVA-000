@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tradeasseta.dao.AssetFreezeMapper">
+  <resultMap id="BaseResultMap" type="com.example.tradeasseta.entity.AssetFreeze">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="freeze_asset_cny" jdbcType="BIGINT" property="freezeAssetCny" />
+    <result column="freeze_asset_us" jdbcType="BIGINT" property="freezeAssetUs" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from asset_freeze
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.tradeasseta.entity.AssetFreeze">
+    insert into asset_freeze (id, user_id, freeze_asset_cny, 
+      freeze_asset_us, `status`)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{freezeAssetCny,jdbcType=BIGINT}, 
+      #{freezeAssetUs,jdbcType=BIGINT}, #{status,jdbcType=TINYINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.tradeasseta.entity.AssetFreeze">
+    update asset_freeze
+    set user_id = #{userId,jdbcType=BIGINT},
+      freeze_asset_cny = #{freezeAssetCny,jdbcType=BIGINT},
+      freeze_asset_us = #{freezeAssetUs,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, user_id, freeze_asset_cny, freeze_asset_us, `status`
+    from asset_freeze
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, freeze_asset_cny, freeze_asset_us, `status`
+    from asset_freeze
+  </select>
+  <select id="findByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, user_id, freeze_asset_cny, freeze_asset_us, `status`
+    from asset_freeze
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

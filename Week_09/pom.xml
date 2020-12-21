@@ -19,6 +19,9 @@
 
     <modules>
         <module>rpc01</module>
+        <module>trade-biz</module>
+        <module>trade-asset-a</module>
+        <module>trade-asset-b</module>
     </modules>
 
     <dependencies>
