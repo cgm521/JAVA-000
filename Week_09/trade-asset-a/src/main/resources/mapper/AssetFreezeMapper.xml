@@ -39,5 +39,6 @@
     select id, user_id, freeze_asset_cny, freeze_asset_us, `status`
     from asset_freeze
     where user_id = #{userId,jdbcType=BIGINT}
+    order by id desc limit 1
   </select>
 </mapper>

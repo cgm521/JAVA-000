@@ -18,12 +18,8 @@
                     charset="UTF-8" threadpool="fixed" threads="500"
                     queues="0" buffer="8192" accepts="0" payload="8388608"/>
 
-    <dubbo:reference timeout="500000000"
-                     interface="com.example.tradeasseta.service.UserAssetService"
-                     id="userAssetService"
-                     retries="0" check="false" actives="20" loadbalance="hmilyRandom"/>
-    <dubbo:reference timeout="500000000"
-                     interface="com.example.tradeasseta.service.AssetFreezeService"
-                     id="assetFreezeService"
-                     retries="0" check="false" actives="20" loadbalance="hmilyRandom"/>
+    <bean id = "hmilyApplicationContextAware" class="org.dromara.hmily.spring.HmilyApplicationContextAware"/>
+    <bean id = "hmilyTransactionAspect" class="org.dromara.hmily.spring.aop.SpringHmilyTransactionAspect"/>
+    <bean id = "refererAnnotationBeanPostProcessor" class="org.dromara.hmily.spring.annotation.RefererAnnotationBeanPostProcessor"/>
+
 </beans>

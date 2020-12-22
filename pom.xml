@@ -17,6 +17,8 @@
     <properties>
         <fastjson.version>1.2.73</fastjson.version>
         <guava.version>19.0</guava.version>
+        <mysql.connect.java>5.1.47</mysql.connect.java>
+        <mybatis.spring.boot.starter>1.3.1</mybatis.spring.boot.starter>
     </properties>
 
     <modules>

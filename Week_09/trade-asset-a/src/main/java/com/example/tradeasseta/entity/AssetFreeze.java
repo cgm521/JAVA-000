@@ -11,7 +11,7 @@ public class AssetFreeze implements Serializable {
 
     private Long freezeAssetUs;
 
-    private Byte status;
+    private Integer status;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,11 +47,11 @@ public class AssetFreeze implements Serializable {
         this.freezeAssetUs = freezeAssetUs;
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

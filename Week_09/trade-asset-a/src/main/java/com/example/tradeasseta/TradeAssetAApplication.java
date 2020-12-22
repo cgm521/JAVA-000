@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @Slf4j
 @SpringBootApplication
-@ImportResource({"classpath:spring-dubbo.xml"})
+//@ImportResource({"classpath:spring-dubbo.xml"})
 //@DubboComponentScan("com.example.tradeasseta.service.impl")
 public class TradeAssetAApplication {
 
