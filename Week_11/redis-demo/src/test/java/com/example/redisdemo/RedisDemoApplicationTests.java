@@ -1,9 +1,12 @@
 package com.example.redisdemo;
 
 import com.example.redisdemo.jedis.JedisUtils;
+import com.example.redisdemo.redistemplate.RedisMessageListenerAdapter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
+import javax.annotation.Resource;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -51,5 +54,13 @@ class RedisDemoApplicationTests {
         String requestId = UUID.randomUUID().toString();
         System.out.println(JedisUtils.tryLock(lockKey, requestId, 10));
         System.out.println(JedisUtils.unLock(lockKey,"123"));
+    }
+
+    @Resource
+    private RedisMessageListenerAdapter redisMessageListenerAdapter;
+    @Test
+    public void subpub() {
+        MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(redisMessageListenerAdapter);
+        messageListenerAdapter.afterPropertiesSet();
     }
 }
