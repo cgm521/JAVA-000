@@ -72,7 +72,6 @@ public class JedisUtils {
             close(jedis);
         }
         return false;
-
     }
 
     public static boolean lock(String lockKey, String requestId, int expireTime) {
