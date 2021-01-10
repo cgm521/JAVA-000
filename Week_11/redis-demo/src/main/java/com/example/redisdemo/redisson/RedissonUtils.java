@@ -35,6 +35,7 @@ public class RedissonUtils {
         if (atomicLong.get()<=0) {
             return false;
         }
+        redissonClient.getLock("").lock();
         return atomicLong.decrementAndGet()>=0;
     }
 
