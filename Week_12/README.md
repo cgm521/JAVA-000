@@ -1,4 +1,7 @@
-
+# 25#1
+- 必做)搭建一个3节点Kafka集群，测试功能和性能;实现spring kafka下对kafka集群 的操作，将代码提交到github
+  - [生产者](spring-kafka/src/main/java/com/example/springkafka/KafkaProducer.java)
+  - [消费者](spring-kafka/src/main/java/com/example/springkafka/KafkaConsumer.java)
 # kafka
 
 ![image2](img/image2.png)
