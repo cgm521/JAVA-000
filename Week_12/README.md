@@ -4,7 +4,7 @@
 ![image2](img/image2.png)
 - 启动三台kafka，broker id分别是10，11，22，
 - 如上图，topic test32创建了3个partitions
-- topic test32有3个分区(partition),分别是0，1，2这三个分片分别位于三台kafka上
+- topic test32有3个分区(partition),分别是0，1，2这三个分区分别位于三台kafka上
   - 分片0，位于服务器11，12。11是leader
   - 分片1，位于服务器22，10。22是leader
   - 分片2，位于服务器10，11。10是leader
