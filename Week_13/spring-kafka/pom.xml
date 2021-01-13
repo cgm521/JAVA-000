@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.example</groupId>
-        <artifactId>week_12</artifactId>
+        <artifactId>week_13</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>spring-kafka</artifactId>
